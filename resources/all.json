@@ -1,0 +1,180 @@
+[
+
+{
+    "id": "nkx",
+    "name": "日経平均株価",
+    "symbol": "^N225",
+    "region": "東京"
+}, {
+    "id": "tpx",
+    "name": "TOPIX",
+    "symbol": "^TOPX",
+    "region": "東京"
+}, {
+    "id": "jsd",
+    "name": "ジャスダック",
+    "symbol": "^JSD",
+    "region": "東京"
+}, {
+    "id": "dow",
+    "name": "NYダウ",
+    "symbol": "^DJI",
+    "region": "ニューヨーク"
+}, {
+    "id": "spx",
+    "name": "S&P 500",
+    "symbol": "^GSPC",
+    "region": "ニューヨーク"
+}, {
+    "id": "nsd",
+    "name": "ナスダック総合",
+    "symbol": "^IXIC",
+    "region": "ナスダック"
+}, {
+    "id": "hsi",
+    "name": "香港 ハンセン",
+    "symbol": "^HSI",
+    "region": "香港"
+}, {
+    "id": "ss",
+    "name": "上海総合",
+    "symbol": "000001.SS",
+    "region": "上海"
+}, {
+    "id": "ks",
+    "name": "韓国総合",
+    "symbol": "^KS11",
+    "region": "ソウル"
+}, {
+    "id": "dax",
+    "name": "DAX",
+    "symbol": "^GDAXI",
+    "region": "Xetra"
+}, {
+    "id": "cac",
+    "name": "CAC 40",
+    "symbol": "^FCHI",
+    "region": "パリ"
+}, {
+    "id": "vsp",
+    "name": "ブラジルボベスパ",
+    "symbol": "^BVSP",
+    "region": "サンパウロ"
+}, {
+    "id": "fnkx",
+    "name": "日経225先物",
+    "symbol": "NIY=F",
+    "region": "先物"
+}, {
+    "id": "ftpx",
+    "name": "TOPIX先物",
+    "symbol": "TPY=F",
+    "region": "先物"
+}, {
+    "id": "fdow",
+    "name": "NYダウ先物",
+    "symbol": "YM=F",
+    "region": "先物"
+}, {
+    "id": "fspx",
+    "name": "先物SPX500",
+    "symbol": "ES=F",
+    "region": "先物"
+}, {
+    "id": "fnsd",
+    "name": "ナスダック100",
+    "symbol": "NQ=F",
+    "region": "先物"
+}, {
+    "id": "dy",
+    "name": "ドル/円",
+    "symbol": "JPY=X",
+    "region": "通貨"
+}, {
+    "id": "ey",
+    "name": "ユーロ/円",
+    "symbol": "EURJPY=X",
+    "region": "通貨"
+}, {
+    "id": "py",
+    "name": "ポンド/円",
+    "symbol": "GBPJPY=X",
+    "region": "通貨"
+}, {
+    "id": "ed",
+    "name": "ユーロ/ドル",
+    "symbol": "EURUSD=X",
+    "region": "通貨"
+}, {
+    "id": "pd",
+    "name": "ポンド/ドル",
+    "symbol": "GBPUSD=X",
+    "region": "通貨"
+}, {
+    "id": "ad",
+    "name": "豪ドル/ドル",
+    "symbol": "AUDUSD=X",
+    "region": "通貨"
+}, {
+    "id": "nd",
+    "name": "NZドル/ドル",
+    "symbol": "NZDUSD=X",
+    "region": "通貨"
+}, {
+    "id": "gc",
+    "name": "金",
+    "symbol": "GC=F",
+    "region": "金属"
+}, {
+    "id": "si",
+    "name": "銀",
+    "symbol": "SI=F",
+    "region": "金属"
+}, {
+    "id": "hg",
+    "name": "銅",
+    "symbol": "HG=F",
+    "region": "金属"
+}, {
+    "id": "cl",
+    "name": "原油 WTI",
+    "symbol": "CL=F",
+    "region": "エネルギー"
+}, {
+    "id": "rb",
+    "name": "ガソリン RBOB",
+    "symbol": "RB=F",
+    "region": "エネルギー"
+}, {
+    "id": "ng",
+    "name": "天然ガス",
+    "symbol": "NG=F",
+    "region": "エネルギー"
+}, {
+    "id": "aapl",
+    "name": "Apple Inc.",
+    "symbol": "AAPL",
+    "region": "株式"
+}, {
+    "id": "goog",
+    "name": "Alphabet Inc.",
+    "symbol": "GOOG",
+    "region": "株式"
+}, {
+    "id": "msft",
+    "name": "Microsoft Corporation",
+    "symbol": "MSFT",
+    "region": "株式"
+}, {
+    "id": "fb",
+    "name": "Facebook, Inc.",
+    "symbol": "FB",
+    "region": "株式"
+}, {
+    "id": "amzn",
+    "name": "Amazon.com, Inc.",
+    "symbol": "AMZN",
+    "region": "株式"
+}
+
+]

@@ -1,0 +1,55 @@
+[
+
+{
+    "id": "fnkx",
+    "name": "日経225先物",
+    "symbol": "NIY=F",
+    "region": "先物"
+}, {
+    "id": "ftpx",
+    "name": "TOPIX先物",
+    "symbol": "TPY=F",
+    "region": "先物"
+}, {
+    "id": "fdow",
+    "name": "NYダウ先物",
+    "symbol": "YM=F",
+    "region": "先物"
+}, {
+    "id": "fspx",
+    "name": "先物SPX500",
+    "symbol": "ES=F",
+    "region": "先物"
+}, {
+    "id": "fnsd",
+    "name": "ナスダック100",
+    "symbol": "NQ=F",
+    "region": "先物"
+}, {
+    "id": "fhsi",
+    "name": "香港40",
+    "symbol": "",
+    "region": "香港"
+}, {
+    "id": "fss",
+    "name": "中国H株",
+    "symbol": "",
+    "region": "上海"
+}, {
+    "id": "fdax",
+    "name": "DAX 30 先物",
+    "symbol": "",
+    "region": "Xetra"
+}, {
+    "id": "fftse",
+    "name": "FTSE 100 先物",
+    "symbol": "",
+    "region": "ロンドン"
+}, {
+    "id": "fcac",
+    "name": "CAC 40 先物",
+    "symbol": "",
+    "region": "パリ"
+}
+
+]

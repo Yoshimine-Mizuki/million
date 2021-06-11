@@ -1,0 +1,40 @@
+[
+
+{
+    "id": "dy",
+    "name": "ドル/円",
+    "symbol": "JPY=X",
+    "region": "通貨"
+}, {
+    "id": "ey",
+    "name": "ユーロ/円",
+    "symbol": "EURJPY=X",
+    "region": "通貨"
+}, {
+    "id": "py",
+    "name": "ポンド/円",
+    "symbol": "GBPJPY=X",
+    "region": "通貨"
+}, {
+    "id": "ed",
+    "name": "ユーロ/ドル",
+    "symbol": "EURUSD=X",
+    "region": "通貨"
+}, {
+    "id": "pd",
+    "name": "ポンド/ドル",
+    "symbol": "GBPUSD=X",
+    "region": "通貨"
+}, {
+    "id": "ad",
+    "name": "豪ドル/ドル",
+    "symbol": "AUDUSD=X",
+    "region": "通貨"
+}, {
+    "id": "nd",
+    "name": "NZドル/ドル",
+    "symbol": "NZDUSD=X",
+    "region": "通貨"
+}
+
+]

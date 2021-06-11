@@ -1,0 +1,75 @@
+[
+
+{
+    "id": "nkx",
+    "name": "日経平均株価",
+    "symbol": "^N225",
+    "region": "東京"
+}, {
+    "id": "tpx",
+    "name": "TOPIX",
+    "symbol": "^TOPX",
+    "region": "東京"
+}, {
+    "id": "jsd",
+    "name": "ジャスダック",
+    "symbol": "^JSD",
+    "region": "東京"
+}, {
+    "id": "dow",
+    "name": "NYダウ",
+    "symbol": "^DJI",
+    "region": "ニューヨーク"
+}, {
+    "id": "spx",
+    "name": "S&P 500",
+    "symbol": "^GSPC",
+    "region": "ニューヨーク"
+}, {
+    "id": "nsd",
+    "name": "ナスダック総合",
+    "symbol": "^IXIC",
+    "region": "ナスダック"
+}, {
+    "id": "hsi",
+    "name": "香港 ハンセン",
+    "symbol": "^HSI",
+    "region": "香港"
+}, {
+    "id": "ss",
+    "name": "上海総合",
+    "symbol": "000001.SS",
+    "region": "上海"
+}, {
+    "id": "ks",
+    "name": "韓国総合",
+    "symbol": "^KS11",
+    "region": "ソウル"
+}, {
+    "id": "dax",
+    "name": "DAX",
+    "symbol": "^GDAXI",
+    "region": "Xetra"
+}, {
+    "id": "ftse",
+    "name": "FTSE 100",
+    "symbol": "^FTSE",
+    "region": "ロンドン"
+}, {
+    "id": "cac",
+    "name": "CAC 40",
+    "symbol": "^FCHI",
+    "region": "パリ"
+}, {
+    "id": "fmib",
+    "name": "イタリア FTSE MIB",
+    "symbol": "FTSEMIB.MI",
+    "region": "ミラノ"
+}, {
+    "id": "vsp",
+    "name": "ブラジルボベスパ",
+    "symbol": "^BVSP",
+    "region": "サンパウロ"
+}
+
+]

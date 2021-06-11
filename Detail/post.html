@@ -1,0 +1,23 @@
+ <script>
+    window.addEventListener( 'message', function( event ) {
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function() {
+            if ( xhr.readyState == 4 && xhr.status == 200 ) {
+
+                var data = xhr.responseText;
+
+                event.source.postMessage( data, event.origin );
+
+            }
+        };
+
+        var param = event.data.split( '&' );
+
+        xhr.open( 'POST', 'http://163.43.108.169/cgi-bin/test.py', true );
+        xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+        xhr.send( 'id=' + param[0] + '&type=' + param[1] );
+
+    }, false );
+</script>

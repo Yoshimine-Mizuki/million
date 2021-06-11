@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='format-detection' content='telephone=no,address=no,email=no'>
+    <meta name='viewport' content='width=device-width,user-scalable=no,maximum-scale=1,viewport-fit=cover'>
+    <link rel='stylesheet' href='../resources/css/style.css'>
+    <script src='../resources/js/canvasjs.min.js' type='text/javascript' charset='utf-8' async defer></script>
+
+    <title>MILLION</title>
+</head>
+
+<body onload='init();' ontouchend>
+    <header class='header'>
+        <p class='title'>MILLION</p>
+        <nav class='nav'>
+            <div class='nav-wrapper'>
+                <a href='/index.html' class='nav-text' id='index'>株価指数</a>
+                <a href='/future.html' class='nav-text' id='future'>株価指数先物</a>
+                <a href='/stock.html' class='nav-text' id='stock'>株式</a>
+                <a href='/exchange.html' class='nav-text' id='exchange'>為替</a>
+                <a href='/commodities.html' class='nav-text' id='commodities'>商品先物</a>
+                <a href='/cryptocurrency.html' class='nav-text' id='cryptocurrency'>暗号通貨</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class='stock-details' id='details'>
+        <div class='wrapper'>
+            <div class='stock-name' id='name'>読み込み中...</div>
+            <label for='type' class='select-wrapper'>
+                <select id='type' class='type' name='type' onchange='select(this)'>
+                    <option value='sarima'>SARIMA</option>
+                    <option value='rnn'>RNN</option>
+                    <option value='prophet'>Prophet</option>
+                </select>
+            </label>
+            <div class='graph-wrapper'>
+                <div class='graph-large' id='graph'><div class='loader-wrapper'><div class='loader'></div></div></div>
+            </div>
+            <nav class='slidemenu'>
+                <input type='radio' name='slideItem' id='slide-item-1' class='slide-toggle' onclick='showGraph(5)'/>
+                <label for='slide-item-1'><span>1週間</span></label>
+                <input type='radio' name='slideItem' id='slide-item-2' class='slide-toggle' onclick='showGraph(30)' checked/>
+                <label for='slide-item-2'><span>1ヶ月</span></label>
+                <input type='radio' name='slideItem' id='slide-item-3' class='slide-toggle' onclick='showGraph(90)'/>
+                <label for='slide-item-3'><span>3ヶ月</span></label>
+                <input type='radio' name='slideItem' id='slide-item-4' class='slide-toggle' onclick='showGraph(180)'/>
+                <label for='slide-item-4'><span>6ヶ月</span></label>
+                <input type='radio' name='slideItem' id='slide-item-5' class='slide-toggle' onclick='showGraph(365)'/>
+                <label for='slide-item-5'><span>1年</span></label>
+                <div class='slider'><div class='bar'></div></div>
+            </nav>
+            <label class='check-wrapper'>
+                <input type='checkbox' name='checkbox' class='checkbox-input' onclick='showMA(this.checked)'>
+                <span class='checkbox-parts'>移動平均線を表示</span>
+            </label>
+            <div class='stock-info'>
+                <div class='info-wrapper'>
+                    <div class='info-main' id='currently'>---</div>
+                    <div class='info-index'>現在値</div>
+                </div>
+                <div class='info-wrapper'>
+                    <div class='info-main' id='min'>---</div>
+                    <div class='info-index'>未来安値</div>
+                </div>
+                <div class='info-wrapper'>
+                    <div class='info-main' id='max'>---</div>
+                    <div class='info-index'>未来高値</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class='copyright'>© 2020 MILLION</div>
+    </footer>
+
+    <iframe id='ifrm' src='http://163.43.108.169/Detail/post.html'></iframe>
+</body>
+
+<script>
+
+    var initData, term, ma = false, paramArray = [], data = [], ma5 = [], ma25 = [], ma75 = [];
+
+    function $( e ) { return document.getElementById( e ); };
+
+    function getJson( sourceid ) {
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if ( xhr.readyState == 4 && xhr.status == 200 ) {
+
+                initData = JSON.parse( xhr.responseText );
+
+                getData( paramArray.id );
+
+                var match = initData.filter( function( item, index ) {
+                    if ( item.symbol == paramArray.id ) return true;
+                } );
+
+                $( 'name' ).innerHTML = match[0].name + '(' + match[0].symbol + ')' + '<span>' + match[0].region + '</span>';
+
+                window.removeEventListener( 'message', arguments.callee );
+
+            }
+        }
+
+        xhr.open( 'GET', '../resources/' + sourceid + '.json' );
+        xhr.send();
+
+    }
+
+    function getData( symbol, type = 'sarima' ) {
+
+        var ifrm = $( 'ifrm' ).contentWindow, send = symbol + '&' + type;
+        ifrm.postMessage( send, 'http://163.43.108.169/' );
+
+        window.addEventListener( 'message', ( event ) => {
+
+            var get = JSON.parse( event.data );
+
+            data = [];
+
+            for ( var i = 0; i < get.length; i++ )
+                data.push( { x: new Date( get[i]['x'] ), y: get[i]['y'] } );
+
+            calcChart();
+            showGraph( 30 );
+
+            $('slide-item-2').checked = true;
+
+            window.removeEventListener( 'message', arguments.callee );
+
+        }, false );
+
+    }
+
+    function init() {
+
+        var urlParam = location.search.substring( 1 );
+
+        if( urlParam ) {
+
+            var param = urlParam.split( '&' );
+
+            for ( i = 0; i < param.length; i++ ) {
+
+                var paramItem = param[i].split( ':' );
+                paramArray[paramItem[0]] = paramItem[1];
+
+            }
+
+            $( paramArray.sourceid ).setAttribute( 'this', '' );
+
+            getJson( paramArray.sourceid );
+
+        }
+
+    }
+
+    function calcChart() {
+
+        ma5 = []; ma25 = []; ma75 = [];
+
+        for ( var i = 4; i < data.length; i++ ) {
+
+            var sum = 0;
+
+            for ( var j = 0; j <= 4; j++ ) sum += data[i-j]['y'];
+
+            ma5.push( { x: new Date( data[i]['x'] ), y: sum / 5 } );
+
+        }
+
+        for ( var i = 24; i < data.length; i++ ) {
+
+            var sum = 0;
+
+            for ( var j = 0; j <= 24; j++ ) sum += data[i-j]['y'];
+
+            ma25.push( { x: new Date( data[i]['x'] ), y: sum / 25 } );
+
+        }
+
+        for ( var i = 74; i < data.length; i++ ) {
+
+            var sum = 0;
+
+            for ( var j = 0; j <= 74; j++ ) sum += data[i-j]['y'];
+
+            ma75.push( { x: new Date( data[i]['x'] ), y: sum / 75 } );
+
+        }
+
+    }
+
+    function showGraph( stock ) {
+
+        term = stock;
+
+        var l_ma5 = ma5.slice( 70, 70 + stock ), l_ma25 = ma25.slice( 50, 50 + stock ), l_ma75 = ma75.slice( 0, stock );
+
+        if ( ma == false ) var l_ma5 = [], l_ma25 = [], l_ma75 = [];
+
+        var currentData = data.slice( 74, 74 + stock )
+
+        var start = data[74]['y'], end = data[74 + stock]['y'];
+        var color = ( end > start ) ? '#83dced' : '#fb1a8e';
+
+        var chart = new CanvasJS.Chart( 'graph', {
+            animationEnabled: true,
+            axisX: {
+                labelWrap: false,
+                labelAngle: 0,
+                labelFormatter: function (e) {
+                    return CanvasJS.formatDate( e.value, 'YY/MM/DD' );
+                },
+                gridColor: 'white',
+                lineColor: 'white',
+                tickColor: 'white',
+                crosshair: {
+                    enabled: true,
+                    snapToDataPoint: true,
+                    color: '#a5b9d9',
+                    labelFontColor: 'white',
+                    labelBackgroundColor: color,
+                    labelFormatter: function (e) {
+                        return CanvasJS.formatDate( e.value, 'YYYY/MM/DD' );
+                    }
+                }
+            },
+            axisY2: {
+                labelWrap: false,
+                gridColor: '#dbe3f0',
+                lineColor: 'white',
+                tickColor: 'white',
+                crosshair: {
+                    enabled: true,
+                    color: '#a5b9d9',
+                    labelFontColor: 'white',
+                    labelBackgroundColor: color
+                }
+            },
+            toolTip:{
+                shared: true
+             },
+            data: [{
+                name: '未来株価',
+                type: 'splineArea',
+                color: color,
+                fillOpacity: .2,
+                markerSize: 0,
+                axisYType: 'secondary',
+                yValueFormatString: '##,###',
+                dataPoints: currentData
+            }, {
+                name: '5日移動平均線',
+                type: 'spline',
+                color: '#ff5722',
+                markerSize: 0,
+                axisYType: 'secondary',
+                yValueFormatString: '##,###',
+                dataPoints: l_ma5
+            }, {
+                name: '25日移動平均線',
+                type: 'spline',
+                color: '#2196f3',
+                markerSize: 0,
+                axisYType: 'secondary',
+                yValueFormatString: '##,###',
+                dataPoints: l_ma25
+            }, {
+                name: '75日移動平均線',
+                type: 'spline',
+                color: '#2ec2ad',
+                markerSize: 0,
+                axisYType: 'secondary',
+                yValueFormatString: '##,###',
+                dataPoints: l_ma75
+            }]
+        });
+
+        chart.render();
+
+        var cur = currentData[0]['y'];
+        var max = currentData.reduce( ( a, b ) => a.y > b.y ? a : b );
+        var min = currentData.reduce( ( a, b ) => a.y < b.y ? a : b );
+
+        $( 'currently' ).innerHTML = cur;
+        $( 'min' ).innerHTML = min.y;
+        $( 'max' ).innerHTML = max.y;
+
+    }
+
+    function select( obj ) {
+
+        $( 'graph' ).innerHTML = '<div class="loader-wrapper"><div class="loader"></div></div>';
+
+        var idx = obj.selectedIndex;
+        var value = obj.options[idx].value;
+
+        getData( paramArray.id, value );
+
+    }
+
+    function showMA( data ) {
+
+        ma = data;
+
+        showGraph( term );
+
+    }
+
+</script>
+
+</html>

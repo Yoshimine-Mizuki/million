@@ -1,0 +1,30 @@
+[
+
+{
+    "id": "aapl",
+    "name": "Apple Inc.",
+    "symbol": "AAPL",
+    "region": "株式"
+}, {
+    "id": "goog",
+    "name": "Alphabet Inc.",
+    "symbol": "GOOG",
+    "region": "株式"
+}, {
+    "id": "msft",
+    "name": "Microsoft Corporation",
+    "symbol": "MSFT",
+    "region": "株式"
+}, {
+    "id": "fb",
+    "name": "Facebook, Inc.",
+    "symbol": "FB",
+    "region": "株式"
+}, {
+    "id": "amzn",
+    "name": "Amazon.com, Inc.",
+    "symbol": "AMZN",
+    "region": "株式"
+}
+
+]

@@ -1,0 +1,35 @@
+[
+
+{
+    "id": "gc",
+    "name": "金",
+    "symbol": "GC=F",
+    "region": "金属"
+}, {
+    "id": "si",
+    "name": "銀",
+    "symbol": "SI=F",
+    "region": "金属"
+}, {
+    "id": "hg",
+    "name": "銅",
+    "symbol": "HG=F",
+    "region": "金属"
+}, {
+    "id": "cl",
+    "name": "原油 WTI",
+    "symbol": "CL=F",
+    "region": "エネルギー"
+}, {
+    "id": "rb",
+    "name": "ガソリン RBOB",
+    "symbol": "RB=F",
+    "region": "エネルギー"
+}, {
+    "id": "ng",
+    "name": "天然ガス",
+    "symbol": "NG=F",
+    "region": "エネルギー"
+}
+
+]

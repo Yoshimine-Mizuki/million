@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='format-detection' content='telephone=no,address=no,email=no'>
+    <meta name='viewport' content='width=device-width,user-scalable=no,maximum-scale=1,viewport-fit=cover'>
+    <link rel='stylesheet' href='resources/css/style.css'>
+    <script src='resources/js/canvasjs.min.js' type='text/javascript' charset='utf-8' async defer></script>
+
+    <title>MILLION</title>
+</head>
+
+<body onload='init();' ontouchend>
+    <header class='header'>
+        <p class='title'>MILLION</p>
+        <nav class='nav'>
+            <div class='nav-wrapper'>
+                <a href='/index.html' class='nav-text'>株価指数</a>
+                <a href='/future.html' class='nav-text'>株価指数先物</a>
+                <a href='/stock.html' class='nav-text'>株式</a>
+                <a href='/exchange.html' class='nav-text'>為替</a>
+                <a href='/commodities.html' class='nav-text'>商品先物</a>
+                <a href='/cryptocurrency.html' class='nav-text' this>暗号通貨</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class='stock-list' ¥>
+        <div class='card-wrapper' id='list'>
+        </div>
+    </div>
+
+    <footer>
+        <div class='copyright'>© 2020 MILLION</div>
+    </footer>
+
+    <iframe id='ifrm' src='http://59.106.208.160/post.html'></iframe>
+</body>
+
+<script>
+    var initData;
+
+    function $( e ) { return document.getElementById( e ); };
+
+    function get_data( send ) {
+
+        var ifrm = $( 'ifrm' ).contentWindow;
+        ifrm.postMessage( send, 'http://59.106.208.160/' );
+
+        window.addEventListener( 'message', function( event ) {
+
+            console.log( event.data );
+
+            window.removeEventListener( 'message', arguments.callee );
+
+        }, false );
+
+    }
+
+    function init() {
+
+        getJson();
+
+    }
+
+    function getJson() {
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+            if ( xhr.readyState == 4 && xhr.status == 200 ) {
+
+                initData = JSON.parse( xhr.responseText );
+
+                showCard();
+
+            }
+        }
+
+        xhr.open( 'GET', 'resources/index.json' );
+        xhr.send();
+
+    }
+
+    function getData( send ) {
+
+        var ifrm = $( 'ifrm' ).contentWindow;
+        ifrm.postMessage( send, 'http://59.106.208.160/' );
+
+        window.addEventListener( 'message', function( event ) {
+
+            var get = JSON.parse( event.data ), stock = [];
+
+            for ( var i = 1; i < get.length; i++ )
+                stock.push( { x: new Date( get[i]['x'] ), y: get[i]['y'] } );
+
+            var id = get[0]['id'];
+
+            showGraph( id, stock );
+
+            // window.removeEventListener( 'message', arguments.callee );
+
+        }, false );
+
+    }
+
+    function showCard() {
+
+        for ( var i = 0; i < initData.length; i++ ) {
+
+            var id = initData[i]['symbol'], name = initData[i]['name'], symbol = initData[i]['symbol'];
+
+            var elements = '<div class="card ' + id + '" onclick="details(this)"><div class="graph-small load" id="' + id + '"><div class="loader-wrapper-min"><div class="loader"></div></div></div><div class="info"><div class="card-name">' + name + '</div><div class="close" id="' + id + '-close">---</div><div class="ratio" id="' + id + '-ratio">+000.00 (+0.00%)</div></div></div>';
+
+            $( 'list' ).innerHTML += elements;
+
+            getData( id );
+
+        }
+
+    }
+
+    function showGraph( id, stock ) {
+
+        var start = stock[0]['y'], end = stock[stock.length-1]['y'];
+        var diff = ( end - start ).toFixed( 2 ), diff2 = ( diff / start * 100 ).toFixed( 2 );
+
+        var color = ( diff > 0 ) ? '#83dced' : '#FB1A8E';
+
+        var chart = new CanvasJS.Chart( id, {
+            animationEnabled: true,
+            axisX: {
+                labelWrap: false,
+                gridColor: 'white',
+                lineColor: 'white',
+                tickColor: 'white',
+            },
+            axisY: {
+                labelWrap: false,
+                gridColor: 'white',
+                lineColor: 'white',
+                tickColor: 'white',
+            },
+            toolTip:{
+                enabled: false,
+                shared: false
+            },
+            data: [{
+                type: 'spline',
+                color: color,
+                markerSize: 0,
+                yValueFormatString: '##,###',
+                    dataPoints: stock
+            }]
+        } )
+
+        chart.render();
+
+        $( id ).classList.remove( 'load' );
+
+        var ratio = ( diff > 0 ) ? '+' + diff : diff;
+        var percent = ( diff > 0 ) ? '+' + diff2 : diff2;
+        var tag = ( diff > 0 ) ? 'up' : 'down';
+
+        $( id + '-close' ).innerHTML = end.toFixed( 2 ).toLocaleString();
+        $( id + '-ratio' ).innerHTML = ratio + ' (' + percent + '%)';
+        $( id + '-ratio' ).classList.add( tag );
+
+    }
+
+    function details( data ) {
+
+        var getId = data.classList[1];
+
+        location.href = 'Detail/?id:' + getId + '&sourceid:cryptocurrency';
+
+    }
+
+</script>
+
+</html>
