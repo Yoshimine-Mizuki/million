@@ -4,6 +4,10 @@
 SARIMA, RNN, Prophet(Facebookが開発した時系列予測ライブラリ)の3つの時系列分析を用いて予測を行います。
 1週間から1年先までの予測を行い、グラフに表示します。
 
+URL : https://yoshimine-mizuki.github.io/million/
+※CGIを利用できないので動きません。
+ 
+
 ```
 million/
 ├── Detail/ : 株価詳細ページ
